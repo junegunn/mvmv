@@ -52,18 +52,30 @@ class Mvmv
         files.map(&:downcase)
       end
 
-      def regex f, t, files
+      def regexpi f, t, files
         seq = Sequencer.new
         files.map { |file|
-          file.gsub(Regexp.compile f) { |match|
-            n = 0
-            captures = []
-            while v = eval("$#{n += 1}")
-              captures << v 
-            end
-            seq.convert t.gsub(/\$([1-9][0-9]*)/) { |c| captures[$1.to_i - 1] }
-          }
+          seq.convert file.gsub(Regexp.compile(f, Regexp::IGNORECASE), t)
         }
+      end
+
+      def regexp f, t, files
+        seq = Sequencer.new
+        files.map { |file|
+          seq.convert file.gsub(Regexp.compile(f), t)
+        }
+      end
+
+      def name_regexpi f, t, files
+        regexpi(f, t, files.map { |file|
+          file.chomp(File.extname file)
+        }).zip(files.map { |file| File.extname file }).map(&:join)
+      end
+
+      def name_regexp f, t, files
+        regexp(f, t, files.map { |file|
+          file.chomp(File.extname file)
+        }).zip(files.map { |file| File.extname file }).map(&:join)
       end
     end
   end#Command

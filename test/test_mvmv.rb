@@ -15,8 +15,17 @@ class TestMvmv < Test::Unit::TestCase
     assert_equal input.zip(%w[aaa.jpeg bbb.jpeg ccc.jpg.jpeg]), m.convert_filenames(:ext, '.jpeg', *input)
     assert_equal input.zip(%w[AAA.JPG BBB.GIF CCC.JPG.PNG]), m.convert_filenames(:upper, *input)
     assert_equal input.zip(%w[aaa.jpg bbb.gif ccc.jpg.png]), m.convert_filenames(:lower, *input)
+
     input = %w[abc.jpg xyz.GIF ijk.jpg.png]
-    assert_equal input.zip(%w[cba01.jpg zyx02.GIF kji03.jpg.png]), m.convert_filenames(:regex, '^([a-z])([a-z])([a-z])', '$3$2$1##', *input)
+    assert_equal input.zip(%w[cba01.jpg zyx02.GIF kji03.jpg.png]), m.convert_filenames(:regexp, '^([a-z])([a-z])([a-z])', '\3\2\1##', *input)
+    assert_equal input.zip(input), m.convert_filenames(:regexp, '^([A-Z])([A-Z])([A-Z])', '\3\2\1##', *input)
+    assert_equal input.zip(%w[cba01.jpg zyx02.GIF kji03.jpg.png]), m.convert_filenames(:regexpi, '^([A-Z])([a-z])([A-Z])', '\3\2\1##', *input)
+
+    assert_equal input.zip(%w[cba01.gpj01 zyx02.GIF kji03.gpj03.gnp03]), m.convert_filenames(:regexp, '([a-z])([a-z])([a-z])', '\3\2\1##', *input)
+
+    input = %w[Abc.jpg xyz.GIF ijk.jpg.png]
+    assert_equal input.zip(%w[Abc.jpg zyx02.GIF kji03.gpj03.png]), m.convert_filenames(:name_regexp, '([a-z])([a-z])([a-z])', '\3\2\1##', *input)
+    assert_equal input.zip(%w[cbA01.jpg zyx02.GIF kji03.gpj03.png]), m.convert_filenames(:name_regexpi, '([a-z])([a-z])([a-z])', '\3\2\1##', *input)
   end
 
   def test_rename!

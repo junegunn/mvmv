@@ -9,14 +9,18 @@ opts = OptionParser.new do |opts|
     "usage: mvmv <command> [<args>] <files>"
 
   opts.separator ''
-  opts.separator '       mvmv prefix      <prefix>     <files>'
-  opts.separator '       mvmv suffix      <suffix>     <files>'
-  opts.separator '       mvmv name        <name>       <files>'
-  opts.separator '       mvmv name-suffix <suffix>     <files>'
-  opts.separator '       mvmv ext         <.extension> <files>'
-  opts.separator '       mvmv regex       <from> <to>  <files>'
-  opts.separator '       mvmv upper                    <files>'
-  opts.separator '       mvmv lower                    <files>'
+  opts.separator '       mvmv prefix       <prefix>     <files>'
+  opts.separator '       mvmv suffix       <suffix>     <files>'
+  opts.separator '       mvmv name         <name>       <files>'
+  opts.separator '       mvmv name-suffix  <suffix>     <files>'
+  opts.separator '       mvmv ext          <.extension> <files>'
+  opts.separator '       mvmv upper                     <files>'
+  opts.separator '       mvmv lower                     <files>'
+  opts.separator ''
+  opts.separator '       mvmv regexp       <from> <to>  <files>'
+  opts.separator '       mvmv regexpi      <from> <to>  <files>'
+  opts.separator '       mvmv name-regexp  <from> <to>  <files>'
+  opts.separator '       mvmv name-regexpi <from> <to>  <files>'
   opts.separator ''
 
   opts.on('-f', '--force', 'Force rename') do |v|

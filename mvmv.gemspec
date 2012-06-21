@@ -4,8 +4,8 @@ require File.expand_path('../lib/mvmv/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Junegunn Choi"]
   gem.email         = ["junegunn.c@gmail.com"]
-  gem.description   = %q{Rename a series of files easily}
-  gem.summary       = %q{Rename a series of files easily}
+  gem.description   = %q{Simple batch renaming}
+  gem.summary       = %q{Simple batch renaming}
   gem.homepage      = "https://github.com/junegunn/mvmv"
 
   gem.files         = `git ls-files`.split($\)
