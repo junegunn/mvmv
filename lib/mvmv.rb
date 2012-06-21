@@ -3,8 +3,10 @@ require 'mvmv/command'
 require 'ansi'
 
 class Mvmv
-  def initialize color = true
-    @color = color
+  def initialize color = true, outstream = $stdout, instream = $stdin
+    @color     = color
+    @outstream = outstream
+    @instream  = instream
   end
 
   def convert_filenames symb, *args
@@ -38,7 +40,7 @@ private
 
     pairs.each do |pair|
       from, to = pair
-      next if from == to
+      next if from == to || to.empty?
       skip = false
       while true
         log [
@@ -55,7 +57,7 @@ private
         ].compact.join(' ')
 
         unless force
-          case $stdin.gets
+          case @instream.gets
           when nil
             puts
             next
@@ -100,8 +102,6 @@ private
           end
         end
 
-        # DOIT
-        # Overwrite?
         unless skip
           begin
             File.rename from, to
@@ -120,11 +120,11 @@ private
   end
 
   def log msg, *colors
-    $stdout.print ansi(msg, *colors)
+    @outstream.print ansi(msg, *colors)
   end
 
   def logln msg, *colors
-    $stdout.puts ansi(msg, *colors)
+    @outstream.puts ansi(msg, *colors)
   end
 
   def error message, x = Exception

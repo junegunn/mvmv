@@ -1,6 +1,6 @@
 # Mvmv
 
-"Move! Move!"
+Simple batch renaming script.
 
 ## Installation
 
@@ -9,24 +9,25 @@
 ## Usage
 
 ```
-usage: mvmv <command> [<args>] <files>
+usage:    mvmv [OPTIONS] <command> [<args>] <files>
 
-       mvmv prefix       <prefix>     <files>
-       mvmv suffix       <suffix>     <files>
-       mvmv name         <name>       <files>
-       mvmv name-suffix  <suffix>     <files>
-       mvmv ext          <.extension> <files>
-       mvmv upper                     <files>
-       mvmv lower                     <files>
+commands:
+          mvmv prefix       <prefix>     <files>
+          mvmv suffix       <suffix>     <files>
+          mvmv name         <name>       <files>
+          mvmv name-suffix  <suffix>     <files>
+          mvmv ext          <.extension> <files>
+          mvmv upper                     <files>
+          mvmv lower                     <files>
 
-       mvmv regexp       <from> <to>  <files>
-       mvmv regexpi      <from> <to>  <files>
-       mvmv name-regexp  <from> <to>  <files>
-       mvmv name-regexpi <from> <to>  <files>
+          mvmv regexp       <from> <to>  <files>
+          mvmv regexpi      <from> <to>  <files>
+          mvmv name-regexp  <from> <to>  <files>
+          mvmv name-regexpi <from> <to>  <files>
 
-    -f, --force                      Force rename
-        --no-color                   Disable ANSI color codes
-        --help                       Show this message
+options:
+          -f, --force       Force rename
+              --no-color    Disable ANSI color codes
 ```
 
 ## Examples
@@ -41,10 +42,11 @@ mvmv suffix .bak *.txt
 ### Numbering files
 
 You can attach sequence numbers to files with a series of `#`s.
+Depending on the number of `#`s, numbers will be padded with zeros.
 
 ```
 mvmv name Photo#### *.jpg *.gif *.png
-mvmv name-suffix -#### *.jpg
+mvmv name-suffix -## *.jpg
 ```
 
 ### Advanced renaming with regular expressions
