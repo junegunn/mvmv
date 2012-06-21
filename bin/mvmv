@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'mvmv'
+require 'optparse'
+
+options = {}
+opts = OptionParser.new do |opts|
+  opts.banner = 
+    "usage: mvmv <command> [<args>] <files>"
+
+  opts.separator ''
+  opts.separator '       mvmv prefix      <prefix>     <files>'
+  opts.separator '       mvmv suffix      <suffix>     <files>'
+  opts.separator '       mvmv name        <name>       <files>'
+  opts.separator '       mvmv name-suffix <suffix>     <files>'
+  opts.separator '       mvmv ext         <.extension> <files>'
+  opts.separator '       mvmv regex       <from> <to>  <files>'
+  opts.separator '       mvmv upper                    <files>'
+  opts.separator '       mvmv lower                    <files>'
+  opts.separator ''
+
+  opts.on('-f', '--force', 'Force rename') do |v|
+    options[:force] = v
+  end
+
+  opts.on('--no-color', 'Disable ANSI color codes') do |v|
+    options[:color] = false
+  end
+
+  opts.on_tail('--help', "Show this message") do
+    puts opts
+    exit
+  end
+end
+
+opts.parse! ARGV
+
+if ARGV.length < 2
+  puts opts
+  exit 1
+end
+
+command = ARGV[0].to_s.gsub('-', '_').to_sym
+args    = ARGV[1..-1]
+mvmv    = Mvmv.new options.fetch(:color, true)
+begin
+  if options[:force]
+    mvmv.rename! command, *args
+  else
+    mvmv.rename command, *args
+  end
+rescue ArgumentError => e
+  puts opts
+  exit 1
+rescue Exception => e
+  exit 1
+end
