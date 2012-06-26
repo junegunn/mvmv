@@ -16,7 +16,7 @@ class Mvmv
 
     arg_arity = Mvmv::Command.method(symb).arity - 1
     if arg_arity >= args.length
-      error "Invalid number of parameters for #{symb}", ArgumentError
+      error "Invalid number of parameters for #{symb.to_s.gsub('_', '-')}", ArgumentError
     end
 
     files = args[arg_arity..-1]

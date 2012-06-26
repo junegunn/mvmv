@@ -50,7 +50,7 @@ begin
     mvmv.rename command, *args
   end
 rescue ArgumentError => e
-  puts opts
+  puts usage
   exit 1
 rescue Exception => e
   exit 1
