@@ -28,6 +28,14 @@ class TestMvmv < Test::Unit::TestCase
     assert_equal input.zip(%w[cbA01.jpg zyx02.GIF kji03.gpj03.png]), m.convert_filenames(:name_regexpi, '([a-z])([a-z])([a-z])', '\3\2\1##', *input)
   end
 
+  def test_name_conversion_directory
+    m = Mvmv.new
+    input = %w[aaa.jpg bbb.GIF ccc.jpg.png].map { |e| "x/y/z/#{e}" }
+    assert_equal input.zip(
+      %w[001-aaa.jpg 002-bbb.GIF 003-ccc.jpg.png].map { |e| "x/y/z/#{e}" }
+    ), m.convert_filenames(:prefix, '###-', *input)
+  end
+
   def test_rename!
     m = Mvmv.new
 

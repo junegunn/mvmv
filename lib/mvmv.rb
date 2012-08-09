@@ -20,7 +20,12 @@ class Mvmv
     end
 
     files = args[arg_arity..-1]
-    files.zip Mvmv::Command.send(symb, *(args[0, arg_arity] + [files]))
+    dir_files = files.map { |f| [f.include?('/') ? File.dirname(f) : nil, File.basename(f)] }
+    files.zip(
+      dir_files.map(&:first).zip(
+        Mvmv::Command.send(symb, *(args[0, arg_arity] + [dir_files.map(&:last)]))
+      ).map { |pair| pair.compact.join('/') }
+    )
   end
 
   def rename symb, *args
